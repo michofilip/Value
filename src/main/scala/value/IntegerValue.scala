@@ -3,6 +3,8 @@ package value
 import value.DecimalValue.{DecimalAdd, DecimalDivide, DecimalMultiply, DecimalSubtract}
 import value.IntegerValue.{IntegerAdd, IntegerDivide, IntegerMod, IntegerMultiply, IntegerNegate, IntegerSubtract}
 
+import scala.language.implicitConversions
+
 abstract class IntegerValue extends ComparableValue {
     override protected type T = Long
     
@@ -36,7 +38,23 @@ abstract class IntegerValue extends ComparableValue {
 
 object IntegerValue {
     
-    final case class IntegerConstant(value: Int) extends IntegerValue {
+    implicit def toIntegerValue(value: Byte): IntegerValue = {
+        IntegerConstant(value)
+    }
+    
+    implicit def toIntegerValue(value: Short): IntegerValue = {
+        IntegerConstant(value)
+    }
+    
+    implicit def toIntegerValue(value: Int): IntegerValue = {
+        IntegerConstant(value)
+    }
+    
+    implicit def toIntegerValue(value: Long): IntegerValue = {
+        IntegerConstant(value)
+    }
+    
+    final case class IntegerConstant(value: Long) extends IntegerValue {
         override def get(implicit valueRepository: ValueRepository): Option[Long] = {
             Some(value)
         }

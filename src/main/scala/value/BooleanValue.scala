@@ -2,6 +2,8 @@ package value
 
 import value.BooleanValue.{AND, NOT, OR}
 
+import scala.language.implicitConversions
+
 abstract class BooleanValue extends Value {
     override protected type T = Boolean
     
@@ -13,6 +15,10 @@ abstract class BooleanValue extends Value {
 }
 
 object BooleanValue {
+    
+    implicit def toBooleanValue(value: Boolean): BooleanValue = {
+        ConstantBoolean(value)
+    }
     
     final case class ConstantBoolean(value: Boolean) extends BooleanValue {
         override def get(implicit valueRepository: ValueRepository): Option[Boolean] = {

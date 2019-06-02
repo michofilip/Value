@@ -2,6 +2,8 @@ package value
 
 import value.DecimalValue.{DecimalAdd, DecimalDivide, DecimalMultiply, DecimalNegate, DecimalSubtract}
 
+import scala.language.implicitConversions
+
 
 abstract class DecimalValue extends ComparableValue {
     override protected type T = Double
@@ -33,7 +35,15 @@ abstract class DecimalValue extends ComparableValue {
 
 object DecimalValue {
     
-    final case class DecimalConstant(value: Int) extends DecimalValue {
+    implicit def toDecimalValue(value: Float): DecimalValue = {
+        DecimalConstant(value)
+    }
+    
+    implicit def toDecimalValue(value: Double): DecimalValue = {
+        DecimalConstant(value)
+    }
+    
+    final case class DecimalConstant(value: Double) extends DecimalValue {
         override def get(implicit valueRepository: ValueRepository): Option[Double] = {
             Some(value)
         }

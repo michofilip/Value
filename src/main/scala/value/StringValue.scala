@@ -2,6 +2,8 @@ package value
 
 import value.StringValue.{Concatenate, Length}
 
+import scala.language.implicitConversions
+
 abstract class StringValue extends Value {
     override protected type T = String
     
@@ -11,6 +13,10 @@ abstract class StringValue extends Value {
 }
 
 object StringValue {
+    
+    implicit def toStringValue(value: String): StringValue = {
+        StringConstant(value)
+    }
     
     final case class StringConstant(value: String) extends StringValue {
         override def get(implicit valueRepository: ValueRepository): Option[String] = {
