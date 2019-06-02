@@ -1,8 +1,9 @@
 package value
 
-import value.BooleanValue.{Equals, Unequals}
-import value.DecimalValue.ToDecimal
-import value.IntegerValue.ToInteger
+import value.BooleanValue.{BooleanConstant, Equals, Unequals}
+import value.DecimalValue.{DecimalConstant, ToDecimal}
+import value.IntegerValue.{IntegerConstant, ToInteger}
+import value.StringValue.StringConstant
 
 abstract class Value {
     protected type T
@@ -31,4 +32,22 @@ abstract class Value {
     def toDecimalValue: DecimalValue = {
         ToDecimal(this)
     }
+}
+
+object Value {
+    def apply(value: Boolean): BooleanValue = BooleanConstant(value)
+    
+    def apply(value: Byte): IntegerValue = IntegerConstant(value)
+    
+    def apply(value: Short): IntegerValue = IntegerConstant(value)
+    
+    def apply(value: Int): IntegerValue = IntegerConstant(value)
+    
+    def apply(value: Long): IntegerValue = IntegerConstant(value)
+    
+    def apply(value: Float): DecimalValue = DecimalConstant(value)
+    
+    def apply(value: Double): DecimalValue = DecimalConstant(value)
+    
+    def apply(value: String): StringValue = StringConstant(value)
 }

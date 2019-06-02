@@ -17,10 +17,10 @@ abstract class BooleanValue extends Value {
 object BooleanValue {
     
     implicit def toBooleanValue(value: Boolean): BooleanValue = {
-        ConstantBoolean(value)
+        BooleanConstant(value)
     }
     
-    final case class ConstantBoolean(value: Boolean) extends BooleanValue {
+    final case class BooleanConstant(value: Boolean) extends BooleanValue {
         override def get(implicit valueRepository: ValueRepository): Option[Boolean] = {
             Some(value)
         }
